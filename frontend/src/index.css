@@ -1,0 +1,24 @@
+:root {
+	--bg: #fcfcfc;
+	--bg-accent: #2c2c44;
+	--primary: #a4acfc;
+	--danger: #ff8888;
+	--disabled: #cfd1e6;
+	--text-color: #888888;
+	--nav-size: 60px;
+	--border-radius: 8px;
+	--border: 1px solid rgb(53, 53, 82);
+	--speed: 500ms;
+	--base-font: 'Poppins', sans-serif;
+	--shadow: -1px 6px 24px -6px rgba(0, 0, 0, 0.38);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--base-font);
+}
+.tablee {
+	margin: auto 20px;
+	margin-top: 20px;
+}
