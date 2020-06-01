@@ -1,7 +1,7 @@
-const { sign } = require('jsonwebtoken');
+const { sign } = require("jsonwebtoken");
 // const mongoose = require('mongoose');
-const { hash, compare } = require('bcrypt');
-const AdminModel = require('../models/admin');
+const { hash, compare } = require("bcrypt");
+const AdminModel = require("../models/admin");
 // const authMiddleware = require('../middleware/checkAuthToken');
 
 const generateAuthToken = async (user) => {
@@ -9,7 +9,7 @@ const generateAuthToken = async (user) => {
     const token = await sign(user, process.env.JWT_SECRET);
     return token;
   } catch (err) {
-    console.log('generate auth function', err);
+    console.log("generate auth function", err);
   }
 };
 exports.signupAdmin = async (req, res) => {
@@ -20,7 +20,7 @@ exports.signupAdmin = async (req, res) => {
 
     if (emailAlreadyExist) {
       throw new Error({
-        msg: 'An account with this email has already been created',
+        msg: "An account with this email has already been created",
       });
     }
 
@@ -35,7 +35,7 @@ exports.signupAdmin = async (req, res) => {
     await user.save();
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       requestedAt: req.timestamp,
       data: {
         user,
@@ -43,7 +43,7 @@ exports.signupAdmin = async (req, res) => {
     });
   } catch (err) {
     res.status(401).send({
-      status: 'fail',
+      status: "fail",
       message: err,
     });
   }
@@ -57,11 +57,11 @@ exports.AdminLogin = async (req, res) => {
     const { email, password } = req.body;
     const user = await AdminModel.findOne({ email });
     if (!user) {
-      throw new Error('Email doesnot Exist');
+      throw new Error("Email doesnot Exist");
     }
     const passwordIsCorrect = await compare(password, user.password);
     if (!passwordIsCorrect) {
-      throw new Error('invalid credentials');
+      throw new Error("invalid credentials");
     }
     const token = await generateAuthToken({ user });
     const tokenArray = user.tokens;
@@ -70,7 +70,7 @@ exports.AdminLogin = async (req, res) => {
 
     user.save();
     res.status(200).json({
-      status: 'success',
+      status: "success",
       requestedAt: req.timestamp,
       data: {
         user,
@@ -78,7 +78,7 @@ exports.AdminLogin = async (req, res) => {
     });
   } catch (err) {
     res.status(401).json({
-      status: 'fail',
+      status: "fail",
       message: err,
     });
   }
@@ -94,13 +94,13 @@ exports.AdminSignout = async (req, res) => {
     user.tokens = [];
     user.save();
     res.status(200).json({
-      status: 'success',
+      status: "success",
       requestedAt: req.timestamp,
       data: null,
     });
   } catch (err) {
     res.status(401).json({
-      status: 'fail',
+      status: "fail",
       message: err,
     });
   }
@@ -113,11 +113,12 @@ exports.AdminUpdate = async (req, res) => {
   try {
     const user = await AdminModel.findByIdAndUpdate(
       { _id: req.user._id },
-      req.body
+      req.body,
+      { new: true, runValidators: true }
     );
     const updatedUser = await user.save();
     res.status(200).send({
-      message: 'success',
+      message: "success",
       data: updatedUser,
     });
   } catch (err) {
@@ -128,13 +129,13 @@ exports.AdminUpdate = async (req, res) => {
  * only for testing and debugging
  * hence in development mode
  */
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   exports.getAllAdmins = async (req, res) => {
     try {
       const admins = await AdminModel.find();
 
       res.status(200).json({
-        status: 'success',
+        status: "success",
         requestedAt: req.timestamp,
         results: admins.length,
         data: {
@@ -143,7 +144,7 @@ if (process.env.NODE_ENV === 'development') {
       });
     } catch (err) {
       res.status(404).json({
-        status: 'fail',
+        status: "fail",
         message: err,
       });
     }
