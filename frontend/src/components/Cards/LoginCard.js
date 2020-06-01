@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
 import { Card, CardMedia, Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import InputField from '../Input/InputField';
+import '../../styles/css/InputField.css';
 import { PrimaryButton } from '../Buttons/index';
 import styles from '../../styles/jss/card';
-import { Title } from '../Typography/index';
+import { Title, Text } from '../Typography/index';
+import axios from 'axios';
 
 const useStyles = makeStyles(styles);
 
 export default function LoginCard() {
 	const classes = useStyles();
 	const [style, setStyle] = useState({});
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		// axios.post {URL,
+		// 	header: {
+
+		// 	}
+		// 	data: {
+
+		// 	}
+		// }
+	};
+
 	const customMargin = {
 		margin: '30px 0',
 	};
@@ -29,18 +45,32 @@ export default function LoginCard() {
 					alignItems="center"
 					justifyContent="center"
 				>
-					<form>
+					<form onSubmit={handleSubmit}>
 						<Title>Login</Title>
 						<Box style={customMargin}>
-							<InputField
-								type="input"
-								id="username"
-								heading="Username"
-								placeholder="eg. Alex Grisham"
-							/>
+							<div className="input-div">
+								<Text>Username</Text>
+								<input
+									type="input"
+									id="username"
+									placeholder="eg. Alex Grisham"
+									className="input"
+									value={username}
+									onChange={e => setUsername(e.target.value)}
+								/>
+							</div>
 						</Box>
 						<Box style={customMargin}>
-							<InputField type="password" id="password" heading="Password" />
+							<div className="input-div">
+								<Text>Password</Text>
+								<input
+									type="password"
+									id="password"
+									className="input"
+									value={password}
+									onChange={e => setPassword(e.target.value)}
+								/>
+							</div>
 						</Box>
 						<Box>
 							<PrimaryButton>Login</PrimaryButton>

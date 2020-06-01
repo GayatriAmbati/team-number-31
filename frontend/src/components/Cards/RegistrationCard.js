@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Card, CardMedia, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import InputField from '../Input/InputField';
+// import InputField from '../Input/InputField';
+import '../../styles/css/InputField.css';
 import { PrimaryButton } from '../Buttons/index';
 import styles from '../../styles/jss/card';
-import { Title } from '../Typography/index';
+import { Title, Text } from '../Typography/index';
 
 const useStyles = makeStyles(styles);
 
@@ -31,33 +32,42 @@ export default function RegistrationCard() {
 				>
 					<form>
 						<Title>Register</Title>
-						<Box style={customMargin}>
-							<InputField
-								type="input"
-								id="username"
-								heading="Username"
-								placeholder="eg. Alex Grisham"
-							/>
-						</Box>
-						<Box style={customMargin}>
-							<InputField
-								type="email"
-								id="email"
-								heading="Email"
-								placeholder="eg. alexgrisham@dash.com"
-							/>
-						</Box>
-						<Box style={customMargin}>
-							<InputField type="password" id="password" heading="Password" />
-						</Box>
-						<Box
-							display="flex"
-							justifyContent="center"
-							alignItems="center"
-							width="100%"
-						>
-							<PrimaryButton>Register</PrimaryButton>
-						</Box>
+						<div className="input-div">
+							<Box style={customMargin}>
+								<Text>Username</Text>
+								<input
+									type="input"
+									id="username"
+									placeholder="eg. Alex Grisham"
+									className="input"
+								/>
+							</Box>
+						</div>
+						<div className="input-div">
+							<Box style={customMargin}>
+								<Text>Email</Text>
+								<input
+									type="email"
+									id="email"
+									placeholder="eg. alexgrisham@dash.com"
+									className="input"
+								/>
+							</Box>
+						</div>
+						<div className="input-div">
+							<Box style={customMargin}>
+								<Text>Password</Text>
+								<input type="password" id="password" className="input" />
+							</Box>
+							<Box
+								display="flex"
+								justifyContent="center"
+								alignItems="center"
+								width="100%"
+							>
+								<PrimaryButton>Register</PrimaryButton>
+							</Box>
+						</div>
 					</form>
 				</Box>
 			</CardMedia>
